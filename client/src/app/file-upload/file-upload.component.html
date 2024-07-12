@@ -1,0 +1,27 @@
+<div class="upload-container">
+  <form enctype="multipart/form-data">
+    <h1>Upload Files</h1>
+    <hr>
+    <div class="form-group">
+      <label for="file" class="btn btn-choose-files">{{ selectedFiles.length > 0 ? 'Add More' : 'Choose Files' }}</label>
+      <input type="file" id="file" #fileInput (change)="onFileSelected($event)" class="form-control-file" hidden multiple />
+    </div>
+    <div *ngIf="selectedFiles.length > 0" class="file-preview mt-3">
+      <h3>Selected Files:</h3>
+      <ul>
+        <li *ngFor="let file of selectedFiles">{{ file.name }}</li>
+      </ul>
+      <div class="button-group" *ngIf="!uploadFailed">
+        <button type="button" (click)="removeLastFile()" class="btn btn-remove">Remove</button>
+        <button type="button" (click)="upload()" class="btn-upload">Upload</button>
+        <button type="button" (click)="cancelSelection()" class="btn-cancel">Cancel</button>
+      </div>
+    </div>
+    <div *ngFor="let response of uploadResponses" class="mt-3">
+      <p>{{ response }}</p>
+    </div>
+    <div *ngIf="uploadFailed" class="mt-3">
+      <button type="button" (click)="tryAgain()" class="btn-try-again">Try Again</button>
+    </div>
+  </form>
+</div>

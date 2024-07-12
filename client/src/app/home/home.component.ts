@@ -1,25 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RegisterComponent } from "../register/register.component";
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FileUploadComponent } from '../file-upload/file-upload.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RegisterComponent],
+  imports: [CommonModule, HttpClientModule, FileUploadComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   http = inject(HttpClient);
   registerMode = false;
   users: any;
 
-  ngOnInit(): void {
-    this.getUsers();
-  }
 
   registerToggle() {
-    this.registerMode = !this.registerMode
+    this.registerMode = !this.registerMode;
   }
 
   cancelRegisterMode(event: boolean) {
@@ -27,10 +25,10 @@ export class HomeComponent implements OnInit {
   }
 
   getUsers() {
-    this.http.get('http://localhost:5000/api/users').subscribe({
+    this.http.get('http://localhost:5011/api/users').subscribe({
       next: response => this.users = response,
       error: error => console.log(error),
       complete: () => console.log('Request has completed')
-    })
+    });
   }
 }

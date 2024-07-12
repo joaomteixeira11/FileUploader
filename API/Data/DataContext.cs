@@ -1,9 +1,9 @@
-﻿using API.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using API.Entities;
 
 namespace API.Data;
 
 public class DataContext(DbContextOptions options) : DbContext(options)
 {
-    public DbSet<AppUser> Users { get; set; } // Uses Id from AppUsser as the primary key
+    public DbSet<Files> Files { get; set; }
 }

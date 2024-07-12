@@ -1,0 +1,124 @@
+.upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh; /* Altura da viewport */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #d3d2d2; /* Borda leve para o formulário */
+  padding: 20px;
+  border-radius: 8px; /* Bordas arredondadas */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+  background-color: #adabab; /* Cor de fundo branca */
+}
+
+button {
+  margin-top: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Classe personalizada para botão azul */
+.btn-choose-files {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-choose-files:hover {
+  background-color: darkblue;
+}
+
+/* Classe personalizada para botão remover */
+.btn-remove {
+  background-color: rgb(255, 174, 0);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-remove:hover {
+  background-color: rgb(204, 139, 0);
+}
+
+/* Classe personalizada para botão de upload verde */
+.btn-upload {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-upload:hover {
+  background-color: darkgreen;
+}
+
+/* Classe personalizada para botão de cancelamento vermelho */
+.btn-cancel {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-cancel:hover {
+  background-color: darkred;
+}
+
+/* Classe personalizada para botão de tentar novamente */
+.btn-try-again {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-try-again:hover {
+  background-color: darkorange;
+}
+
+.file-preview {
+  text-align: left;
+}
+
+.file-preview ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.file-preview li {
+  margin-bottom: 5px;
+}
+
+/* Flex container para os botões */
+.button-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px; /* Espaçamento uniforme entre os botões */
+}
