@@ -23,6 +23,6 @@ This project is a web application built with .NET and Angular that allows users 
 2. **Build and Run the Frontend:**
    - Navigate to the client directory: `cd client`
    - Install dependencies: `npm install`
-   - Run the application: `ng serve --open`
+   - Run the application: `ng serve`
 
 Feel free to contribute to the project by submitting issues or pull requests.
