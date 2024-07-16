@@ -1,10 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Net.Http;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace API.Services
 {
@@ -42,7 +37,6 @@ namespace API.Services
 
                 _logger.LogInformation("Sending request to Kaspersky Scan Engine...");
                 var response = await client.PostAsync("/api/v3.0/scanmemory", content);
-                _logger.LogInformation($"Response: {response}");
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -64,7 +58,7 @@ namespace API.Services
                 }
 
                 var result = await response.Content.ReadAsStringAsync();
-                _logger.LogInformation("Received response from Kaspersky Scan Engine.");
+                _logger.LogInformation("Received response from Kaspersky Scan Engine!");
                 return result;
             }
             catch (Exception ex)

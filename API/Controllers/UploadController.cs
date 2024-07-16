@@ -4,38 +4,25 @@ using API.Entities;
 using API.Data;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UploadController : ControllerBase
+    public class UploadController(IWebHostEnvironment env, ILogger<UploadController> logger, DataContext context, KasperskyService kasperskyService) : ControllerBase
     {
-        private readonly IWebHostEnvironment _env;
-        private readonly ILogger<UploadController> _logger;
-        private readonly DataContext _context;
-        private readonly KasperskyService _kasperskyService;
-
-        public UploadController(IWebHostEnvironment env, ILogger<UploadController> logger, DataContext context, KasperskyService kasperskyService)
-        {
-            _env = env ?? throw new ArgumentNullException(nameof(env));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            _kasperskyService = kasperskyService ?? throw new ArgumentNullException(nameof(kasperskyService));
-        }
+        private readonly IWebHostEnvironment _env = env ?? throw new ArgumentNullException(nameof(env));
+        private readonly ILogger<UploadController> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        private readonly DataContext _context = context ?? throw new ArgumentNullException(nameof(context));
+        private readonly KasperskyService _kasperskyService = kasperskyService ?? throw new ArgumentNullException(nameof(kasperskyService));
 
         [HttpPost]
         public async Task<ActionResult> UploadFile([FromForm] FileUploadDto fileUploadDto)
         {
-            _logger.LogInformation("(UploadController)UploadFile endpoint hit");
+            _logger.LogInformation("UploadFile endpoint hit");
 
             if (fileUploadDto.File == null || fileUploadDto.File.Length == 0)
             {
-                _logger.LogWarning("(UploadController)No file uploaded.");
                 return BadRequest("No file uploaded.");
             }
 
@@ -43,7 +30,7 @@ namespace API.Controllers
 
             if (!Directory.Exists(uploadPath))
             {
-                _logger.LogInformation("(UploadController)Creating upload directory.");
+                _logger.LogInformation("Creating upload directory.");
                 Directory.CreateDirectory(uploadPath);
             }
 
@@ -53,11 +40,12 @@ namespace API.Controllers
             {
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    _logger.LogInformation("(UploadController)Saving file to disk.");
+                    _logger.LogInformation("Saving file to disk...");
                     await fileUploadDto.File.CopyToAsync(stream);
+                    _logger.LogInformation("Saved!");
                 }
 
-                _logger.LogInformation("(UploadController)File uploaded successfully to the disk.");
+                _logger.LogInformation("File uploaded successfully to the disk.");
 
                 // Add to the DB
                 var files = new Files
@@ -72,20 +60,20 @@ namespace API.Controllers
                 // Scan the file with Kaspersky
                 try
                 {
-                    _logger.LogInformation($"(UploadController) Trying to scan file ({filePath}) with Kaspersky...");
+                    _logger.LogInformation($"Trying to scan file ({filePath}) with Kaspersky...");
                     var scanResult = await _kasperskyService.ScanFileAsync(filePath);
-                    _logger.LogInformation("(UploadController)Trying to upload dos kaspersky...");
+                    _logger.LogInformation("Scaned!!! Uploading to kaspersky...");
                     return Ok(new { message = "File uploaded successfully!", fileName = fileUploadDto.File.FileName, scanResult });
                 }
                 catch (HttpRequestException ex)
                 {
-                    _logger.LogError(ex, "(UploadController)Error scanning file with Kaspersky.");
+                    _logger.LogError(ex, "Error scanning file with Kaspersky.");
                     return Ok(new { message = "Failed", fileName = fileUploadDto.File.FileName, scanResult = "Failed" });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "(UploadController)An error occurred while uploading the file.");
+                _logger.LogError(ex, "An error occurred while uploading the file.");
                 return StatusCode(500, "An error occurred while uploading the file.");
             }
         }
