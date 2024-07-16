@@ -14,18 +14,20 @@ import { FileUploadService } from '../_services/file-upload.service';
 export class FileUploadComponent {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
   selectedFiles: File[] = [];
-  uploadResponses: string[] = [];
+  uploadResponses: { scanResult: string }[] = [];
   uploadFailed: boolean = false;
+  loading: boolean = false;
 
-  constructor(private fileUploadService: FileUploadService) {}
+  constructor(private fileUploadService: FileUploadService) { }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const files = Array.from(input.files); // Reset the selected files to the new selection
-      this.selectedFiles.push(...files); // Adicionar novos arquivos ao array existente
-      this.uploadResponses = []; // Clear previous responses when new files are selected
-      this.uploadFailed = false; // Reset upload failure status
+      const files = Array.from(input.files);
+      this.selectedFiles.push(...files);
+      this.uploadResponses = [];
+      this.uploadFailed = false;
+      this.loading = false;
     }
     if (this.fileInput) {
       this.fileInput.nativeElement.value = '';
@@ -35,7 +37,8 @@ export class FileUploadComponent {
   cancelSelection() {
     this.selectedFiles = [];
     this.uploadResponses = [];
-    this.uploadFailed = false; // Reset upload failure status
+    this.uploadFailed = false;
+    this.loading = false;
     if (this.fileInput) {
       this.fileInput.nativeElement.value = '';
     }
@@ -43,27 +46,38 @@ export class FileUploadComponent {
 
   upload() {
     if (this.selectedFiles.length === 0) {
-      this.uploadResponses.push('Please select at least one file first!');
+      this.uploadResponses.push({ scanResult: 'Please select at least one file first!' });
       return;
     }
 
-    this.selectedFiles.forEach(file => {
-      this.fileUploadService.uploadFile(file).subscribe({
-        next: (response: {message: string}) => {
-          this.uploadResponses.push(`File uploaded successfully!`);
-          this.uploadFailed = false;
-        },
-        error: (err) => {
-          console.error("FAILED!!!!!", err);
-          this.uploadResponses.push(`Upload failed`);
-          this.uploadFailed = true;
-        }
-      })
+    this.loading = true;
+    const uploadObservables = this.selectedFiles.map(file =>
+      this.fileUploadService.uploadFile(file).toPromise()
+        .then(response => {
+          const scanResult = JSON.parse(response.scanResult).scanResult; // Extract scanResult
+          const resultString = `${file.name}: ${scanResult}`;
+          console.log(`Scan result for ${file.name}: ${scanResult}`); // Print scan result to terminal
+          return { fileName: file.name, scanResult: resultString };
+        })
+        .catch(() => {
+          const resultString = `${file.name}: Failed`;
+          console.log(`Scan result for ${file.name}: Failed`); // Print failed result to terminal
+          return { fileName: file.name, scanResult: resultString };
+        })
+    );
+
+    Promise.all(uploadObservables).then(results => {
+      this.uploadResponses = results;
+      this.uploadFailed = results.some(result => result.scanResult === 'Failed');
+      this.loading = false;
+    }).catch(error => {
+      this.uploadFailed = true;
+      this.loading = false;
     });
   }
 
   tryAgain() {
-    this.upload(); // Re-attempt the upload
+    this.upload();
   }
 
   removeLastFile() {
