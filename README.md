@@ -23,9 +23,9 @@ This project is a web application built with .NET and Angular that allows users 
    - Navigate to the client directory: `cd client`
    - Install dependencies: `npm install`
    - Run the application: `ng serve`
-   - 
+     
 ## Adittional information
-**Backend** -> Runs on *http://localhost:5011* and *https://localhost:5012*
-**Frontend** -> Runs on *http//localhost:4201*
+**Backend:** Runs on *http://localhost:5011* and *https://localhost:5012*
+**Fronten:** Runs on *http//localhost:4201*
 
 Feel free to contribute to the project by submitting issues or pull requests.
