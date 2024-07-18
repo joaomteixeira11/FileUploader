@@ -24,8 +24,8 @@ This project is a web application built with .NET and Angular that allows users 
    - Install dependencies: `npm install`
    - Run the application: `ng serve`
      
-## Adittional information
+## Adittional information:
 **Backend:** Runs on *http://localhost:5011* and *https://localhost:5012*
-**Fronten:** Runs on *http//localhost:4201*
+**Frontend:** Runs on *http//localhost:4201*
 
 Feel free to contribute to the project by submitting issues or pull requests.
