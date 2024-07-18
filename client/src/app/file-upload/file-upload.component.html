@@ -19,7 +19,7 @@
     </div>
     <div *ngIf="loading" class="loading">Loading...</div>
     <div *ngFor="let response of uploadResponses" class="mt-3">
-      <p>{{ response.scanResult }}</p>
+      <p>{{ response.fileName }}: {{ response.status }}</p>
     </div>
     <div *ngIf="uploadFailed" class="mt-3">
       <button type="button" (click)="tryAgain()" class="btn-try-again">Try Again</button>

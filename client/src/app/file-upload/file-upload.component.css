@@ -43,7 +43,7 @@ button {
 
 /* Classe personalizada para botão remover */
 .btn-remove {
-  background-color: rgb(255, 174, 0);
+  background-color: orange;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -53,7 +53,7 @@ button {
 }
 
 .btn-remove:hover {
-  background-color: rgb(204, 139, 0);
+  background-color: darkorange;
 }
 
 /* Classe personalizada para botão de upload verde */

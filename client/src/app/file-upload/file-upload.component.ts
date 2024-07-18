@@ -14,7 +14,7 @@ import { FileUploadService } from '../_services/file-upload.service';
 export class FileUploadComponent {
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
   selectedFiles: File[] = [];
-  uploadResponses: { scanResult: string }[] = [];
+  uploadResponses: { fileName: string, status: string }[] = [];
   uploadFailed: boolean = false;
   loading: boolean = false;
 
@@ -46,7 +46,7 @@ export class FileUploadComponent {
 
   upload() {
     if (this.selectedFiles.length === 0) {
-      this.uploadResponses.push({ scanResult: 'Please select at least one file first!' });
+      this.uploadResponses.push({ fileName: '', status: 'Please select at least one file first!' });
       return;
     }
 
@@ -54,21 +54,15 @@ export class FileUploadComponent {
     const uploadObservables = this.selectedFiles.map(file =>
       this.fileUploadService.uploadFile(file).toPromise()
         .then(response => {
-          const scanResult = JSON.parse(response.scanResult).scanResult; // Extract scanResult
-          const resultString = `${file.name}: ${scanResult}`;
-          console.log(`Scan result for ${file.name}: ${scanResult}`); // Print scan result to terminal
-          return { fileName: file.name, scanResult: resultString };
+          console.log('Scan result:', response.scanResult); // Adicione um log para depuração
+          return { fileName: response.fileName, status: response.scanResult };
         })
-        .catch(() => {
-          const resultString = `${file.name}: Failed`;
-          console.log(`Scan result for ${file.name}: Failed`); // Print failed result to terminal
-          return { fileName: file.name, scanResult: resultString };
-        })
+        .catch(() => ({ fileName: file.name, status: 'Failed' }))
     );
 
     Promise.all(uploadObservables).then(results => {
       this.uploadResponses = results;
-      this.uploadFailed = results.some(result => result.scanResult === 'Failed');
+      this.uploadFailed = results.some(result => result.status === 'Failed');
       this.loading = false;
     }).catch(error => {
       this.uploadFailed = true;

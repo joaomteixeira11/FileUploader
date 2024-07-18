@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FileUploadService {
-  baseUrl = 'http://localhost:5011/api/'; // Verifique se a porta e o URL estão corretos
+  baseUrl = 'http://localhost:5011/api/';
 
   constructor(private http: HttpClient) { }
 
@@ -14,6 +14,6 @@ export class FileUploadService {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
-    return this.http.post<{ message: string }>(this.baseUrl + 'upload', formData, { withCredentials: true });
+    return this.http.post<{ fileName: string, scanResult: string }>(this.baseUrl + 'upload', formData, { withCredentials: true });
   }
 }
