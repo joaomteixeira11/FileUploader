@@ -8,13 +8,11 @@ This project is a web application built with .NET and Angular that allows users 
 - **File Management:** Options to cancel the selection or remove the last selected file.
 - **Secure Upload:** Implements SSL certificates for secure file transmission to the server.
 - **Kaspersky Integration:** Uploaded files are scanned by the Kaspersky Scan Engine before acceptance.
-- **Database Integration:** Stores details of uploaded files including file name, file path, and upload time in a database.
 - **Error Handling:** Provides feedback on upload success or failure with options to retry on failure.
 
 ## Technologies Used:
 - **Backend:** ASP.NET Core
 - **Frontend:** Angular
-- **Database:** SQLite
 - **HTTP Client:** Handles file upload requests and SSL configuration
 
 ## Setup Instructions:
