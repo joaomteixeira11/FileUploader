@@ -27,5 +27,6 @@ This project is a web application built with .NET and Angular that allows users 
 ## Additional Information:
 - **Backend:** Runs on *http://localhost:5011* and *https://localhost:5012*
 - **Frontend:** Runs on *http://localhost:4201*
+- For better understanding of the kasperskys scan results *https://support.kaspersky.com/ScanEngine/2.1/en-US/193001.htm*
 
 Feel free to contribute to the project by submitting issues or pull requests.
