@@ -1,3 +1,9 @@
+// ****************************************************************************************************
+//    This code sets up a web application using ASP.NET Core. It configures Serilog for logging,
+// adds services to the dependency injection container, sets up an HTTP client for the Kaspersky API,
+//               configures CORS policies, and builds the application pipeline.
+// ****************************************************************************************************
+
 using API.Services;
 using Serilog;
 

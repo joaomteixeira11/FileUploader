@@ -1,3 +1,8 @@
+// ****************************************************************************************************
+//       This Angular component handles file selection, cancellation, and uploading of files.
+//  It uses the FileUploadService to send files to the backend API and displays the upload responses.
+// ****************************************************************************************************
+
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

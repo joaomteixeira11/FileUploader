@@ -1,4 +1,10 @@
-﻿using System.Text.Json;
+﻿// ***********************************************************************************
+// This code defines a service for interacting with the Kaspersky Scan Engine API. 
+//     It includes a method that uploads a file to the Kaspersky Scan Engine, 
+//    waits for the scan to complete, and returns the scan result as a string.
+// ***********************************************************************************
+
+using System.Text.Json;
 using System.Text;
 
 namespace API.Services

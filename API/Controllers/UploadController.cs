@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿// ****************************************************************************************************************
+// This code defines an API controller for file uploads. It includes a POST endpoint that accepts a file upload,
+//  scans the file using the Kaspersky service, and returns the scan result. It also logs relevant information
+//                                   and handles errors appropriately
+// ****************************************************************************************************************
+
+using Microsoft.AspNetCore.Mvc;
 using API.DTOs;
 using API.Services;
 

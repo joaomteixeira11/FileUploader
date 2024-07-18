@@ -1,3 +1,8 @@
+// ****************************************************************************************************************
+//                 This Angular service handles file uploads to a specified API endpoint. 
+//  It uses HttpClient to send a POST request with the file data and returns the server response as an Observable.
+// ****************************************************************************************************************
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
